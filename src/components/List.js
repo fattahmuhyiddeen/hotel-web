@@ -51,7 +51,7 @@ function List(props) {
           return (
             <Card
               key={data.id}
-              style={{ marginTop: 16 }}
+              style={{ marginTop: 16, backgroundColor: isEditing ? '#eee' : 'white' }}
               type="inner"
               title={data.name}
               extra={
