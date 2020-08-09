@@ -23,7 +23,7 @@ function Form(props) {
     } else {
       reset();
     }
-  }, [props.editItem])
+  }, [props.editItem]);
 
   const reset = () => {
     setName('');
@@ -34,7 +34,7 @@ function Form(props) {
     props.setEditItem();
   }
 
-  const submit = () => {
+  const insert = () => {
     if (isLoading) {
       return;
     }
@@ -68,7 +68,7 @@ function Form(props) {
     Api({
       endpoint: endpoints.update(props.editItem.id),
       data: { name, validity, duration, price, description },
-      onSuccess: (response) => {
+      onSuccess: () => {
         reset();
         setIsLoading(false);
       },
@@ -88,7 +88,7 @@ function Form(props) {
         <Button onClick={reset} shape="round" icon={<CloseCircleOutlined />} size={10}>
           Cancel
         </Button>
-        <Button onClick={isEditing ? update : submit} type="danger" shape="round" icon={isLoading ? <LoadingOutlined /> : <SaveOutlined />} size={10}>
+        <Button onClick={isEditing ? update : insert} type="danger" shape="round" icon={isLoading ? <LoadingOutlined /> : <SaveOutlined />} size={10}>
           {isEditing ? 'Update' : 'Insert'}
         </Button>
       </div>
