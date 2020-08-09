@@ -5,3 +5,8 @@
 ### Running the project
 1. Clone this project
 1. Install dependencies through `yarn`
+
+### Limitations & Improvements
+1. Should implement pagination where query list of hotels
+1. Should have unit & feature test
+1. Should have authentication to update and insert new hotel
