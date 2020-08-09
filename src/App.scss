@@ -24,7 +24,16 @@
 }
 
 .spread-row{
-  padding-top:1em;
+  padding-top: 1em;
   display: flex;
   justify-content: space-between;
+}
+
+.flex-end{
+  display: flex;
+   justify-content: flex-end;
+}
+
+.small-padding{
+  padding: 1em
 }

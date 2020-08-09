@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Input, Typography, Button, Space } from 'antd';
-import { SaveOutlined, CloseCircleOutlined } from '@ant-design/icons';
+import { SaveOutlined, CloseCircleOutlined, LoadingOutlined } from '@ant-design/icons';
 import Api from '../api';
 import { endpoints } from '../endpoints';
 
@@ -35,15 +35,20 @@ function Form(props) {
   }
 
   const submit = () => {
+    if (isLoading) {
+      return;
+    }
     setIsLoading(true);
-    // fetch(endpoints.insert()[1], {
-    //   method: endpoints.insert()[0],
+    // fetch('http://localhost:3001/hotel', {
+    //   method: 'post',
     //   body: JSON.stringify({ name, validity, duration, price, description })
-    // }).then(function (response) {
+    // }).then((response) => {
     //   return response.json();
-    // }).then(function (data) {
+    // }).then((data) => {
+    //   console.log(data)
     //   // ChromeSamples.log('Created Gist:', data.html_url);
     // });
+    // return
     Api({
       endpoint: endpoints.insert(),
       data: { name, validity, duration, price, description },
@@ -56,6 +61,9 @@ function Form(props) {
   }
 
   const update = () => {
+    if (isLoading) {
+      return;
+    }
     setIsLoading(true);
     Api({
       endpoint: endpoints.update(props.editItem.id),
@@ -80,7 +88,7 @@ function Form(props) {
         <Button onClick={reset} shape="round" icon={<CloseCircleOutlined />} size={10}>
           Cancel
         </Button>
-        <Button onClick={isEditing ? update : submit} type="danger" shape="round" icon={<SaveOutlined />} size={10}>
+        <Button onClick={isEditing ? update : submit} type="danger" shape="round" icon={isLoading ? <LoadingOutlined /> : <SaveOutlined />} size={10}>
           {isEditing ? 'Update' : 'Insert'}
         </Button>
       </div>

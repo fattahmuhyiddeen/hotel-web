@@ -10,11 +10,11 @@ function App() {
   return (
     <div className="container">
       <div className="header">Hotel CRUD system</div>
-      <Row style={{ width: '100%' }}>
-        <Col span={7} style={{ padding: '1em' }}>
+      <Row>
+        <Col span={7} className="small-padding">
           <Form editItem={editItem} setEditItem={setEditItem} />
         </Col>
-        <Col span={17} style={{ padding: '1em' }}>
+        <Col span={17} className="small-padding">
           <div>Hotels List</div>
           <List editItem={editItem} setEditItem={setEditItem} />
         </Col>
