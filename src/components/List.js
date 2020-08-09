@@ -27,9 +27,7 @@ function List(props) {
     setIsLoading(true);
     Api({
       endpoint: endpoints.delete(id),
-      onSuccess: (response) => {
-        refresh();
-      },
+      onSuccess: (response) => refresh(),
       onFail: () => setIsLoading(false)
     })
   }
