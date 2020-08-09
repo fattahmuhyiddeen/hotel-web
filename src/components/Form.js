@@ -19,7 +19,7 @@ function Form(props) {
       setValidity(props.editItem.validity);
       setDuration(props.editItem.duration);
       setDescription(props.editItem.description);
-      setPrice(props.editItem.price);
+      setPrice((props.editItem.price / 100).toFixed(2));
     } else {
       reset();
     }
@@ -38,13 +38,18 @@ function Form(props) {
     if (isLoading) {
       return;
     }
+    if (!isFormComplete()) {
+      alert('Please fill all')
+      return;
+    }
     setIsLoading(true);
     Api({
       endpoint: endpoints.insert(),
-      data: { name, validity, duration, price, description },
+      data: { name, validity, duration, price: price * 100, description },
       onSuccess: (response) => {
         reset();
         setIsLoading(false);
+        props.refresh();
       },
       onFail: () => setIsLoading(false)
     })
@@ -54,25 +59,41 @@ function Form(props) {
     if (isLoading) {
       return;
     }
+    if (!isFormComplete()) {
+      alert('Please fill all')
+      return;
+    }
     setIsLoading(true);
     Api({
       endpoint: endpoints.update(props.editItem.id),
-      data: { name, validity, duration, price, description },
+      data: { name, validity, duration, price: price * 100, description },
       onSuccess: () => {
         reset();
+        props.refresh();
         setIsLoading(false);
       },
       onFail: () => setIsLoading(false)
     })
   }
+
+  const onChangePrice = e => {
+    const { value } = e.target;
+    const reg = /^-?\d*(\.\d*)?$/;
+    if ((!isNaN(value) && reg.test(value)) || value === '' || value === '-') {
+      setPrice(value)
+    }
+  }
+
+  const isFormComplete = () => !!name && !!validity && !!description && !!price && !!duration
   const isEditing = !!props.editItem?.id
   return (
     <Space size="small" direction="vertical">
-      <Title level={4}>{isEditing ? 'Editing: ' + props.editItem.name : 'Add New Hotel Form'}</Title>
+      {isEditing && <Title level={4}>Editing:</Title>}
+      <Title level={4}>{isEditing ? props.editItem.name : 'Add New Hotel Form'}</Title>
       <Input value={name} addonBefore="Name" onChange={e => setName(e.target.value)} />
       <Input value={validity} addonBefore="Validity" onChange={e => setValidity(e.target.value)} />
       <Input value={duration} addonBefore="Duration" onChange={e => setDuration(e.target.value)} />
-      <Input value={price} addonBefore="Price" onChange={e => setPrice(e.target.value)} />
+      <Input value={price} addonBefore="Price (RM)" onChange={onChangePrice} />
       <Input.TextArea value={description} placeholder="Description" rows={4} onChange={e => setDescription(e.target.value)} />
       <div className="spread-row">
         <Button onClick={reset} shape="round" icon={<CloseCircleOutlined />} size={10}>

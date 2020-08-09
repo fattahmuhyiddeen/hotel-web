@@ -8,43 +8,28 @@ import { endpoints } from '../endpoints';
 
 const { Text } = Typography;
 function List(props) {
-  const [list, setList] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
 
-  const refresh = () => {
-    props.setEditItem();
-    setIsLoading(true);
-    Api({
-      endpoint: endpoints.getAll(),
-      onSuccess: (response) => {
-        setList(response.data);
-        setIsLoading(false);
-      },
-      onError: () => setIsLoading(true)
-    })
-  }
   const remove = (id) => {
-    setIsLoading(true);
+    props.setIsLoading(true);
     Api({
       endpoint: endpoints.delete(id),
-      onSuccess: (response) => refresh(),
-      onFail: () => setIsLoading(false)
+      onSuccess: (response) => props.refresh(),
+      onFail: () => props.setIsLoading(false)
     })
   }
 
-  useEffect(() => { refresh() }, []);
 
   return (
     <>
       <div className="flex-end">
-        {isLoading ? <LoadingOutlined /> : <ReloadOutlined onClick={refresh} />}
+        {props.isLoading ? <LoadingOutlined /> : <ReloadOutlined onClick={props.refresh} />}
       </div>
       <InfiniteScroll
         loadMore={() => null}
         hasMore={false}
         loader={<LoadingOutlined />}
       >
-        {list.map(data => {
+        {props.list.map(data => {
           const isEditing = props.editItem?.id == data.id;
           return (
             <Card
@@ -53,7 +38,7 @@ function List(props) {
               type="inner"
               title={data.name}
               extra={
-                isLoading ?
+                props.isLoading ?
                   <LoadingOutlined />
                   :
                   <>
@@ -64,7 +49,7 @@ function List(props) {
             >
               <div><Text type="secondary">Description:</Text> {data.description}</div>
               <div><Text type="secondary">Duration:</Text> {data.duration}</div>
-              <div><Text type="secondary">Price:</Text> {data.price}</div>
+              <div><Text type="secondary">Price:</Text> RM {(data.price / 100).toFixed(2)}</div>
               <div><Text type="secondary">Validity:</Text> {data.validity}</div>
               <div><Text type="secondary">Created At:</Text> {moment(data.created_at).format('DD-MMM-YYYY h:mm:ss a')}</div>
             </Card>)
