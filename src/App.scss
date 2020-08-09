@@ -1,0 +1,24 @@
+.container{
+  height: 100vh;
+}
+
+.header{
+  height: 3em;
+  background-color: red;
+  display: flex;
+  align-items: center;
+  color:white;
+  padding-left: .5em;
+  font-weight: bold;
+  font-size: 1.6em;
+}
+
+.left{
+  flex: 1;
+  padding: 1em;
+}
+
+.right{
+  padding: 1em;
+  flex: 2;
+}
