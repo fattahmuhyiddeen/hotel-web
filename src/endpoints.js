@@ -1,4 +1,4 @@
-export const URL = process.env.URL;
+export const URL = 'https://crud-system.herokuapp.com/';
 export const endpoints = {
   getAll: () => ["GET", URL + "hotels"],
   insert: () => ["POST", URL + "hotel"],
