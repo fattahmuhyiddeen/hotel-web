@@ -17,7 +17,7 @@ function Form(props) {
     if (!!props.editItem) {
       setName(props.editItem.name);
       setValidity(props.editItem.validity);
-      setDuration(props.editItem.description);
+      setDuration(props.editItem.duration);
       setDescription(props.editItem.description);
       setPrice(props.editItem.price);
     } else {
@@ -39,16 +39,6 @@ function Form(props) {
       return;
     }
     setIsLoading(true);
-    // fetch('http://localhost:3001/hotel', {
-    //   method: 'post',
-    //   body: JSON.stringify({ name, validity, duration, price, description })
-    // }).then((response) => {
-    //   return response.json();
-    // }).then((data) => {
-    //   console.log(data)
-    //   // ChromeSamples.log('Created Gist:', data.html_url);
-    // });
-    // return
     Api({
       endpoint: endpoints.insert(),
       data: { name, validity, duration, price, description },

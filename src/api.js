@@ -17,6 +17,7 @@ export default ({
     xhr.open(endpoint[0], endpoint[1] + urlParams);
   }
   const requestHeaders = {
+    'Content-Type': 'application/json'
     // Accept: 'application/json',
     // 'Content-type': 'application/x-www-form-urlencoded',
     // dataType: "json"
