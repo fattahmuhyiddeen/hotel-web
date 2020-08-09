@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Row, Col, Input, InputNumber, Typography } from 'antd';
+import { Row, Col } from 'antd';
 import Form from './components/Form';
 import List from './components/List';
 import './App.scss';

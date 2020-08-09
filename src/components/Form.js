@@ -55,6 +55,18 @@ function Form(props) {
     })
   }
 
+  const update = () => {
+    setIsLoading(true);
+    Api({
+      endpoint: endpoints.update(props.editItem.id),
+      data: { name, validity, duration, price, description },
+      onSuccess: (response) => {
+        reset();
+        setIsLoading(false);
+      },
+      onFail: () => setIsLoading(false)
+    })
+  }
   const isEditing = !!props.editItem?.id
   return (
     <Space size="small" direction="vertical">
@@ -68,7 +80,7 @@ function Form(props) {
         <Button onClick={reset} shape="round" icon={<CloseCircleOutlined />} size={10}>
           Cancel
         </Button>
-        <Button onClick={submit} type="danger" shape="round" icon={<SaveOutlined />} size={10}>
+        <Button onClick={isEditing ? update : submit} type="danger" shape="round" icon={<SaveOutlined />} size={10}>
           {isEditing ? 'Update' : 'Insert'}
         </Button>
       </div>
